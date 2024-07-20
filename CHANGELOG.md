@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/theroncross/globus-sdk-javascript/compare/v3.4.3...v1.13.0) (2024-07-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* adds support for Authorization and Globus (Auth) token management ([#120](https://github.com/theroncross/globus-sdk-javascript/issues/120))
+* updates @globus/types requirement to 0.0.6 ([#61](https://github.com/theroncross/globus-sdk-javascript/issues/61))
+* **Flows:** Removes `flows.destroy` alias, replaced by `flows.remove` in 1.15.0 ([#60](https://github.com/theroncross/globus-sdk-javascript/issues/60))
+* Drops support for Node.js 16 (Gallium) ([#58](https://github.com/theroncross/globus-sdk-javascript/issues/58))
+
+### Features
+
+* adds application-based utilities structure; adds support for obtaining Globus Web App URLs (`sdk.webapp.host()`, `sdk.webapp.url()`, `sdk.webapp.urlFor()`) ([#152](https://github.com/theroncross/globus-sdk-javascript/issues/152)) ([1be5481](https://github.com/theroncross/globus-sdk-javascript/commit/1be5481ccbabc3ecaa01a1b7d13ae0aafb953545))
+* adds Node.js lts/iron to test matrix; Node.js 20 is now officially supported. ([#8](https://github.com/theroncross/globus-sdk-javascript/issues/8)) ([66b4fb2](https://github.com/theroncross/globus-sdk-javascript/commit/66b4fb2d58194860fd941f02bd0d90de31287d97))
+* adds support for Authorization and Globus (Auth) token management ([#120](https://github.com/theroncross/globus-sdk-javascript/issues/120)) ([202e416](https://github.com/theroncross/globus-sdk-javascript/commit/202e416aa79d5bbeac23e00c1271f255789c8761))
+* **Auth:** adds oauth2.token resources to Globus Auth service. ([#47](https://github.com/theroncross/globus-sdk-javascript/issues/47)) ([401526d](https://github.com/theroncross/globus-sdk-javascript/commit/401526d4ff812b80b1cd976d4a51d3949e5c3618))
+* **Authorization:** adds "additionalParams" option to allow passing arbitrary query parameters through OAuth redirects. ([#170](https://github.com/theroncross/globus-sdk-javascript/issues/170)) ([754b508](https://github.com/theroncross/globus-sdk-javascript/commit/754b508c81b5a5e235dc52ffbd411eb4e5519fed))
+* **Authorization:** adds ability to look up GCS tokens (and tokens for arbitrary resource servers) managed by the AuthoirzationManager (client). ([#162](https://github.com/theroncross/globus-sdk-javascript/issues/162)) ([e1cb6b3](https://github.com/theroncross/globus-sdk-javascript/commit/e1cb6b3b7a41ef5a8f1380a415351b002a968009))
+* **Compute:** adds endpoint.getStatus function to Compute service. ([#139](https://github.com/theroncross/globus-sdk-javascript/issues/139)) ([998bb21](https://github.com/theroncross/globus-sdk-javascript/commit/998bb21e8773c252820074b6bf690f9dbdc0070f))
+* **Compute:** adds initial support for Globus Compute ([#135](https://github.com/theroncross/globus-sdk-javascript/issues/135)) ([1923674](https://github.com/theroncross/globus-sdk-javascript/commit/1923674ecf9beccbb29ef45ceb30dd23ea7bc65e))
+* Drops support for Node.js 16 (Gallium) ([#58](https://github.com/theroncross/globus-sdk-javascript/issues/58)) ([4c7e062](https://github.com/theroncross/globus-sdk-javascript/commit/4c7e062e80c9ed4f78ec0158aa4751dc95a74b23)), closes [#14](https://github.com/theroncross/globus-sdk-javascript/issues/14)
+* **GCS:** added create, delete, update, and patch methods for User Credentials. ([#41](https://github.com/theroncross/globus-sdk-javascript/issues/41)) ([966efb5](https://github.com/theroncross/globus-sdk-javascript/commit/966efb5e0954c651ad72f93615c8ee2c75229099))
+* **GCS:** added create, remove, update and patch methods for Storage Gateways ([#42](https://github.com/theroncross/globus-sdk-javascript/issues/42)) ([bf25771](https://github.com/theroncross/globus-sdk-javascript/commit/bf2577130bf7271d363640f9a02be165a575376a))
+* **GCS:** adds `CONNECTORS` constant ([#108](https://github.com/theroncross/globus-sdk-javascript/issues/108)) ([8eea7b8](https://github.com/theroncross/globus-sdk-javascript/commit/8eea7b845c507deefb7af82d646e0a462b843933))
+* **GCS:** adds collections.create, update, patch, and {reset,update}OwnerString ([#37](https://github.com/theroncross/globus-sdk-javascript/issues/37)) ([5b10343](https://github.com/theroncross/globus-sdk-javascript/commit/5b103430a71641e229865c1b6a5dddbfdff70231))
+* **GCS:** adds collections.remove() support ([#10](https://github.com/theroncross/globus-sdk-javascript/issues/10)) ([f12e516](https://github.com/theroncross/globus-sdk-javascript/commit/f12e516fd8754735d9cb694cfb1f9c3df78e287d))
+* **GCS:** adds HTTPS Access service methods to GCS ([#182](https://github.com/theroncross/globus-sdk-javascript/issues/182)) ([a258082](https://github.com/theroncross/globus-sdk-javascript/commit/a2580829c4feb092c5de280f54e949ea195b30bd))
+* **GCS:** adds resource support for setting endpoint subscription_id ([#90](https://github.com/theroncross/globus-sdk-javascript/issues/90)) ([aeb1c3c](https://github.com/theroncross/globus-sdk-javascript/commit/aeb1c3cc4199e04d13fb497e9f40824a502f5965))
+* **Globus Auth:** adds support for the Identities resources in the Globus Auth API ([#7](https://github.com/theroncross/globus-sdk-javascript/issues/7)) ([b56667d](https://github.com/theroncross/globus-sdk-javascript/commit/b56667dbc26f779ddefb55deef4e2676c7591cd0))
+* **Search:** adds support for Get Entry and Get Subject resources ([#78](https://github.com/theroncross/globus-sdk-javascript/issues/78)) ([6ea1d55](https://github.com/theroncross/globus-sdk-javascript/commit/6ea1d55d0c0825aa12ee9920dcab3388e9208dbe))
+* The `errors` module is now exposed as part of the default entry. This includes various utilities (and type guards) for interacting with responses from services. ([#166](https://github.com/theroncross/globus-sdk-javascript/issues/166)) ([0c178b9](https://github.com/theroncross/globus-sdk-javascript/commit/0c178b92c4b8eaddf746225c584493850e93b824))
+* **Transfer:** Add support for collection bookmark methods. ([#146](https://github.com/theroncross/globus-sdk-javascript/issues/146)) ([a5567d1](https://github.com/theroncross/globus-sdk-javascript/commit/a5567d1f2e6577ed1435d7464a35f814e4e39517))
+* **Transfer:** adds resource support for creation and update of GCP collections ([#144](https://github.com/theroncross/globus-sdk-javascript/issues/144)) ([d3ef97a](https://github.com/theroncross/globus-sdk-javascript/commit/d3ef97a0d464c8b9c3f544dd856211b7d5724389))
+* **Transfer:** adds support for Endpoint ACL Management (access) and Advanced Endpoint Management (endpointManager) resources. ([#82](https://github.com/theroncross/globus-sdk-javascript/issues/82)) ([fabc088](https://github.com/theroncross/globus-sdk-javascript/commit/fabc08867f9ef45d89a640350e7770f49bb30b7b))
+* **Transfer:** adds Task-related service methods, endpoint.remove, and updates to shared scope constant. ([#32](https://github.com/theroncross/globus-sdk-javascript/issues/32)) ([d4c7c3c](https://github.com/theroncross/globus-sdk-javascript/commit/d4c7c3c60d81eb1ec53f07613da6a06cbce4d600))
+
+
+### Bug Fixes
+
+* **Auth:** addresses an issue causing auth.oauth2 methods from making proper requests. ([#63](https://github.com/theroncross/globus-sdk-javascript/issues/63)) ([ab64d8a](https://github.com/theroncross/globus-sdk-javascript/commit/ab64d8a2834b17c4c2debf119b234a054f2bc9ef))
+* **Auth:** Improves auth.oauth.token Typescript types and payload/body serialization ([#62](https://github.com/theroncross/globus-sdk-javascript/issues/62)) ([8b430d9](https://github.com/theroncross/globus-sdk-javascript/commit/8b430d94cfe51f1e1b35994cfc313af3b2e4ccd1))
+* **Authorization:** allow creation of AuthorizationManager without a `scope` parameter ([#161](https://github.com/theroncross/globus-sdk-javascript/issues/161)) ([25d0649](https://github.com/theroncross/globus-sdk-javascript/commit/25d06498c0aeefabb4fdbc0f1fb0b263ed73ad63))
+* **Authorization:** attempting to access storage ("getStorage") before instantiation no longer throws an error, instead a default storage system is created. ([#77](https://github.com/theroncross/globus-sdk-javascript/issues/77)) ([7e468db](https://github.com/theroncross/globus-sdk-javascript/commit/7e468db7ddab2629a4a91a721a83f312af151d38)), closes [#76](https://github.com/theroncross/globus-sdk-javascript/issues/76)
+* **Authorization:** ensure AuthorizationManager.reset only clears values from storage that are prefixed with "&lt;client_id&gt;:" ([#154](https://github.com/theroncross/globus-sdk-javascript/issues/154)) ([84942fb](https://github.com/theroncross/globus-sdk-javascript/commit/84942fb894185972a55bde5c0455b58c820f988b))
+* **Authorization:** improves AuthorizationRequirementsError type and related utilities. ([#206](https://github.com/theroncross/globus-sdk-javascript/issues/206)) ([eff53c4](https://github.com/theroncross/globus-sdk-javascript/commit/eff53c48185ff261cc81e92359a4dd43a67e6fb6))
+* **core:** ensure proper context when a fetch __callable is used ([#106](https://github.com/theroncross/globus-sdk-javascript/issues/106)) ([098e924](https://github.com/theroncross/globus-sdk-javascript/commit/098e924399761b10ebaf4d9f9784d068f754a7b1))
+* **Core:** updates client information header name ([#199](https://github.com/theroncross/globus-sdk-javascript/issues/199)) ([010f572](https://github.com/theroncross/globus-sdk-javascript/commit/010f572f1f50ac844676793561d37a6586704395))
+* disable importHelpers to avoid peerDependency of tslib for consumers ([#157](https://github.com/theroncross/globus-sdk-javascript/issues/157)) ([e25946b](https://github.com/theroncross/globus-sdk-javascript/commit/e25946ba2a8743da554341872463b3b3403f971c))
+* **errors, Typescript:** adds `session_required_policies` to `AuthorizatonRequirementsError` type ([#209](https://github.com/theroncross/globus-sdk-javascript/issues/209)) ([2336eed](https://github.com/theroncross/globus-sdk-javascript/commit/2336eedb5869c86e69c7a1f98c827528a9b0e4dd))
+* **Errors:** updates isAuthorizationRequirementsError method to not require "message" or "code" ([#227](https://github.com/theroncross/globus-sdk-javascript/issues/227)) ([100417e](https://github.com/theroncross/globus-sdk-javascript/commit/100417eefb05259f63ee63432ae74e23caeeecf1))
+* **ESM:** addresses missing file extension in generated ESM build ([#177](https://github.com/theroncross/globus-sdk-javascript/issues/177)) ([69fe19c](https://github.com/theroncross/globus-sdk-javascript/commit/69fe19ca7ebd5502b06b624486a60369dbf48898))
+* **Flows:** flows.destory has been replaced by flows.remove ([#15](https://github.com/theroncross/globus-sdk-javascript/issues/15)) ([9498076](https://github.com/theroncross/globus-sdk-javascript/commit/9498076501dc80fc78db4dd9fc0878846e7d54ac))
+* **GCS:** ensure all Globus Connect Server service resource methods are available on `getClient` ([#101](https://github.com/theroncross/globus-sdk-javascript/issues/101)) ([8bdd5a8](https://github.com/theroncross/globus-sdk-javascript/commit/8bdd5a86b6663de0e6c2209c30a583b5f1d39757))
+* **Transfer, Typescript:** specify query types for Transfer task methods ([#92](https://github.com/theroncross/globus-sdk-javascript/issues/92)) ([e762271](https://github.com/theroncross/globus-sdk-javascript/commit/e762271939b730a8389fca27b1c58b925172c106))
+* **Transfer, Typescript:** updates return type of `transfer.endpointManager.getPauseInfo` (PauseInfoLimitedDocument) ([#201](https://github.com/theroncross/globus-sdk-javascript/issues/201)) ([021e46a](https://github.com/theroncross/globus-sdk-javascript/commit/021e46ab7fe6d07bd9fa6b1ea3d983fa0a1ebb2e))
+* **Transfer, Typescript:** updates Transfer marker pagination Query and Response type to number. ([#96](https://github.com/theroncross/globus-sdk-javascript/issues/96)) ([492cd28](https://github.com/theroncross/globus-sdk-javascript/commit/492cd2834a9d4a58e2e292bdff54856dd681b73e))
+* **Transfer:** fix incorrect API hostname for sandbox environment ([#50](https://github.com/theroncross/globus-sdk-javascript/issues/50)) ([edb11eb](https://github.com/theroncross/globus-sdk-javascript/commit/edb11eb859b7135328d649de791dece5c24cd08f))
+* **Types:** adds missing endpoint record fields ([#148](https://github.com/theroncross/globus-sdk-javascript/issues/148)) ([eed68af](https://github.com/theroncross/globus-sdk-javascript/commit/eed68afbe267187847b2609e34489c5ee45be703))
+* **Typescript, Endpoint Manager, Transfer:** updates the types returned by endpointManager.task.getSuccessfulTransfers and getSkippedErrors ([#113](https://github.com/theroncross/globus-sdk-javascript/issues/113)) ([63fc263](https://github.com/theroncross/globus-sdk-javascript/commit/63fc263a132e64f202fa2ef1c114dfd09f930736))
+* **Typescript, Transfer:** fix improper DATA_TYPE type references for transfer.fileOperations.mkdir and transfer.fileOperations.rename ([#69](https://github.com/theroncross/globus-sdk-javascript/issues/69)) ([78578f1](https://github.com/theroncross/globus-sdk-javascript/commit/78578f1015845e96cc2492b3a72f6958a678fffd))
+* **Typescript:** allow non-string types for query properties ([#94](https://github.com/theroncross/globus-sdk-javascript/issues/94)) ([7bf9e9b](https://github.com/theroncross/globus-sdk-javascript/commit/7bf9e9be1179e6602dbbf670440eb08bee1b03b7))
+* updates file paths to include '.js' and directories to use explicit 'index.js' for proper ESM support. ([#3](https://github.com/theroncross/globus-sdk-javascript/issues/3)) ([2b9b3cc](https://github.com/theroncross/globus-sdk-javascript/commit/2b9b3ccfbc10729cddd6d59f35cd944a7a1b4530))
+
+
+### Miscellaneous Chores
+
+* **Flows:** Removes `flows.destroy` alias, replaced by `flows.remove` in 1.15.0 ([#60](https://github.com/theroncross/globus-sdk-javascript/issues/60)) ([fe3ca8a](https://github.com/theroncross/globus-sdk-javascript/commit/fe3ca8a57e605ce48642bff27227693fb4120a94)), closes [#16](https://github.com/theroncross/globus-sdk-javascript/issues/16)
+* **internal:** updates release-please configuration ([8641488](https://github.com/theroncross/globus-sdk-javascript/commit/86414886549da7271d445a5cf4d7bc290f3ab789))
+* updates @globus/types requirement to 0.0.6 ([#61](https://github.com/theroncross/globus-sdk-javascript/issues/61)) ([d01581b](https://github.com/theroncross/globus-sdk-javascript/commit/d01581ba4a666a95a9e6968d665cd46fe9c8f876))
+
 ## [3.4.3](https://github.com/globus/globus-sdk-javascript/compare/v3.4.2...v3.4.3) (2024-07-15)
 
 
