@@ -1,7 +1,11 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type { JSONFetchResponse, ServiceMethodDynamicSegments } from '../../types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * Search Index Role document
@@ -38,8 +42,8 @@ export const getAll = function (
 ): Promise<JSONFetchResponse<IndexRoleListResponse>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/role_list`,
     },
     options,
@@ -61,8 +65,8 @@ export const create = function (
 ): Promise<JSONFetchResponse<IndexRole>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/role`,
       method: HTTP_METHODS.POST,
     },
@@ -94,8 +98,8 @@ export const remove = function (
 ): Promise<JSONFetchResponse<SearchIndexRoleDeleted>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/role/${role_id}`,
       method: HTTP_METHODS.DELETE,
     },

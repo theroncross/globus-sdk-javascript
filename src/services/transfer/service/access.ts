@@ -1,8 +1,12 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 import { QueryParameters } from '../types.js';
 
 import type { ServiceMethodDynamicSegments, JSONFetchResponse } from '../../../services/types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://docs.globus.org/api/transfer/permissions/#permission_document
@@ -39,8 +43,8 @@ export const getAll = function (
 ): Promise<JSONFetchResponse<AccessListDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_xid}/access_list`,
     },
     options,
@@ -64,8 +68,8 @@ export const create = function (
 ): Promise<JSONFetchResponse<AccessDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_xid}/access`,
       method: HTTP_METHODS.POST,
     },
@@ -89,8 +93,8 @@ export const get = function (
 ): Promise<JSONFetchResponse<AccessDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_xid}/access/${id}`,
     },
     options,
@@ -122,8 +126,8 @@ export const update = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_xid}/access/${id}`,
       method: HTTP_METHODS.PUT,
     },
@@ -156,8 +160,8 @@ export const remove = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_xid}/access/${id}`,
       method: HTTP_METHODS.DELETE,
     },

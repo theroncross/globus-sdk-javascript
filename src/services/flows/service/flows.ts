@@ -1,4 +1,5 @@
-import { ID, SCOPES } from '../config.js';
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../../services/shared.js';
 
 import type { OpenAPI } from '../index.js';
@@ -8,6 +9,9 @@ import type {
   ServiceMethod,
   ServiceMethodDynamicSegments,
 } from '../../types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://globusonline.github.io/globus-flows/#tag/Flows/paths/~1flows/get
@@ -22,8 +26,8 @@ export const getAll = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.VIEW_FLOWS,
+      service,
+      resource_server,
       path: `/flows`,
     },
     options,
@@ -47,8 +51,8 @@ export const get = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.VIEW_FLOWS,
+      service,
+      resource_server,
       path: `/flows/${flow_id}`,
     },
     options,
@@ -75,8 +79,8 @@ export const remove = function (
 > {
   return serviceRequest(
     {
-      scope: SCOPES.MANAGE_FLOWS,
-      service: ID,
+      service,
+      resource_server,
       path: `/flows/${flow_id}`,
       method: HTTP_METHODS.DELETE,
     },
@@ -106,8 +110,8 @@ export const run = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.VIEW_FLOWS,
+      service,
+      resource_server,
       path: `/flows/${flow_id}/run`,
       method: HTTP_METHODS.POST,
     },
@@ -142,8 +146,8 @@ export const validate = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.MANAGE_FLOWS,
+      service,
+      resource_server,
       path: `/flows/validate`,
       method: HTTP_METHODS.POST,
     },
@@ -169,8 +173,8 @@ export const create = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.MANAGE_FLOWS,
+      service,
+      resource_server,
       path: `/flows`,
       method: HTTP_METHODS.POST,
     },
@@ -202,8 +206,8 @@ export const update = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.MANAGE_FLOWS,
+      service,
+      resource_server,
       path: `/flows/${flow_id}`,
       method: HTTP_METHODS.PUT,
     },

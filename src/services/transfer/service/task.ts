@@ -1,6 +1,6 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-
-import { ID, SCOPES } from '../config.js';
 
 import type {
   ServiceMethod,
@@ -10,6 +10,9 @@ import type {
 
 import type { PaginatedResponse, QueryParameters } from '../types.js';
 import { PauseRuleDocument } from './endpoint-manager/pause-rule.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 export type TaskDocument = {
   DATA_TYPE: 'task';
@@ -94,8 +97,8 @@ export const getAll = function (
 ): Promise<JSONFetchResponse<PaginatedResponse<'Offset', TaskListDocument>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task_list`,
     },
     options,
@@ -118,8 +121,8 @@ export const get = function (
 ): Promise<JSONFetchResponse<TaskDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}`,
     },
     options,
@@ -151,8 +154,8 @@ export const update = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}`,
       method: HTTP_METHODS.PUT,
     },
@@ -177,8 +180,8 @@ export const cancel = function (
 ): Promise<JSONFetchResponse<TaskDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}/cancel`,
       method: HTTP_METHODS.POST,
     },
@@ -203,8 +206,8 @@ export const remove = function (
 ): Promise<JSONFetchResponse<TaskDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}/remove`,
       method: HTTP_METHODS.POST,
     },
@@ -246,8 +249,8 @@ export const getEventList = function (
 ): Promise<JSONFetchResponse<PaginatedResponse<'Offset', TaskEventListDocument>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}/event_list`,
     },
     options,
@@ -294,8 +297,8 @@ export const getSuccessfulTransfers = function (
 ): Promise<JSONFetchResponse<SuccessfulTransfersListDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}/successful_transfers`,
     },
     options,
@@ -346,8 +349,8 @@ export const getSkippedErrors = function (
 ): Promise<JSONFetchResponse<PaginatedResponse<'Marker', SkippedErrorsListDocument>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}/skipped_errors`,
     },
     options,
@@ -393,8 +396,8 @@ export const getPauseInfo = function (
 ): Promise<JSONFetchResponse<PauseInfoLimitedDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task/${task_id}/pause_info`,
     },
     options,

@@ -7,7 +7,6 @@ export const userinfo = function (options?, sdkOptions?) {
   return serviceRequest(
     {
       service: ID,
-      scope: undefined,
       path: `/v2/oauth2/userinfo`,
       method: HTTP_METHODS.GET,
     },

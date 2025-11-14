@@ -30,15 +30,7 @@ type ServiceRequestDSL = {
    */
   service: Service | GCSConfiguration | UnauthenticatedGCSConfiguration;
   /**
-   * A specific scope that is required for the request. If a scope is provided,
-   * the `serviceRequest` function will attempt to get a token for the request
-   * based on the the `service` => `resource_server` mapping.
-   * @deprecated Define using `resource_server` instead.
-   */
-  scope?: string;
-  /**
-   * The resource server that the request will be made to. This can be provided
-   * instead of (or addition to) the `scope` property. If this is provided, the
+   * The resource server that the request will be made to. If this is provided, the
    * `serviceRequest` function will attempt to get a token for the resource server
    * when a `manager` instance is provided in the SDK options.
    */
@@ -68,7 +60,7 @@ type ServiceRequestDSL = {
  * export const get = function (flow_id, options?, sdkOptions?) {
  *  return serviceRequest({
  *   service: FLOWS.ID,
- *   scope: SCOPES.VIEW_FLOWS,
+ *   resource_server: RESOURCE_SERVERS.FLOWS,
  *   path: `/flows/${flow_id}`,
  *  }, options, sdkOptions);
  * } satisfies ServiceMethodDynamicSegments<string, Record<string, any>>;
@@ -114,33 +106,6 @@ export async function serviceRequest(
    */
   if (config.resource_server && manager) {
     token = manager.tokens.getByResourceServer(config.resource_server);
-    if (token) {
-      headers['Authorization'] = `Bearer ${token.access_token}`;
-    }
-  }
-  /**
-   * If the `scope` property is provided, and the SDK is configured with a `manager`,
-   * we'll try to map the service to a resource server. This is mostly to support
-   * backwards compatibility of the `scope` property being used in the `ServiceRequestDSL`.
-   *
-   * @todo This condition will likely be removed in a future version in favor of using `resource_server` to
-   * configure a service request.
-   */
-  if (
-    config.scope &&
-    manager &&
-    /**
-     * Only attempt to get a token if the `service` property is a string or has an `endpoint_id` property (GCSConfiguration).
-     */
-    (typeof config.service === 'string' || 'endpoint_id' in config.service)
-  ) {
-    const resourceServer =
-      typeof config.service === 'string'
-        ? RESOURCE_SERVERS[config.service]
-        : // For `GCSConfiguration` objects, the `endpoint_id` is the resource server.
-          config.service.endpoint_id;
-
-    token = manager.tokens.getByResourceServer(resourceServer);
     if (token) {
       headers['Authorization'] = `Bearer ${token.access_token}`;
     }

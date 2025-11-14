@@ -1,9 +1,14 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type { JSONFetchResponse, ServiceMethod } from '../../../services/types.js';
 import type { PaginatedResponse, QueryParameters } from '../types.js';
 import type { EntityType, EndpointListDocument } from './endpoint.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
+
 /**
  * @see https://docs.globus.org/api/transfer/endpoint_search/#search_scope
  */
@@ -52,8 +57,8 @@ export const endpointSearch = function (
   };
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_search`,
     },
     serviceRequestOptions,

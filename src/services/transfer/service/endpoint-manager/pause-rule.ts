@@ -1,12 +1,15 @@
+import { ID as service } from '../../config.js';
+import { RESOURCE_SERVERS } from '../../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../../shared.js';
-
-import { ID, SCOPES } from '../../config.js';
 
 import type {
   ServiceMethod,
   ServiceMethodDynamicSegments,
   JSONFetchResponse,
 } from '../../../../services/types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://docs.globus.org/api/transfer/advanced_collection_management/#pause_rule_document
@@ -46,8 +49,8 @@ export const getAll = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/pause_rule_list`,
     },
     options,
@@ -67,8 +70,8 @@ export const create = function (
 ): Promise<JSONFetchResponse<PauseRuleDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/pause_rule`,
       method: HTTP_METHODS.POST,
     },
@@ -90,8 +93,8 @@ export const get = function (
 ): Promise<JSONFetchResponse<PauseRuleDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/pause_rule/${pause_rule_id}`,
     },
     options,
@@ -115,8 +118,8 @@ export const update = function (
 ): Promise<JSONFetchResponse<PauseRuleDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/pause_rule/${pause_rule_id}`,
       method: HTTP_METHODS.PUT,
     },
@@ -149,8 +152,8 @@ export const remove = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/pause_rule/${pause_rule_id}`,
       method: HTTP_METHODS.DELETE,
     },

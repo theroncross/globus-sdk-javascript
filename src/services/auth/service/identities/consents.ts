@@ -1,4 +1,5 @@
-import { ID, SCOPES } from '../../config.js';
+import { ID as service } from '../../config.js';
+import { RESOURCE_SERVERS } from '../../../auth/config.js';
 import { serviceRequest } from '../../../../services/shared.js';
 
 import type { JSONFetchResponse, ServiceMethodDynamicSegments } from '../../../types.js';
@@ -29,8 +30,8 @@ export const getAll = function (
 ): Promise<JSONFetchResponse<{ consents: Consent[] }>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.VIEW_IDENTITIES,
+      service,
+      resource_server: RESOURCE_SERVERS[service],
       path: `/v2/api/identities/${identity_id}/consents`,
     },
     options,

@@ -1,5 +1,6 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type {
   ServiceMethod,
@@ -8,6 +9,9 @@ import type {
 } from '../../types.js';
 
 import type { OpenAPI } from '../index.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://compute.api.globus.org/redoc#tag/Endpoints/operation/get_endpoints_v2_endpoints_get
@@ -22,8 +26,8 @@ export const getAll = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: '/v2/endpoints',
       method: HTTP_METHODS.GET,
     },
@@ -48,8 +52,8 @@ export const get = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v2/endpoints/${endpoint_uuid}`,
       method: HTTP_METHODS.GET,
     },
@@ -78,8 +82,8 @@ export const getStatus = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v2/endpoints/${endpoint_uuid}/status`,
     },
     options,
@@ -107,8 +111,8 @@ export const update = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v3/endpoints/${endpoint_uuid}`,
       method: HTTP_METHODS.PUT,
     },
@@ -139,8 +143,8 @@ export const remove = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v2/endpoints/${endpoint_uuid}`,
       method: HTTP_METHODS.DELETE,
     },

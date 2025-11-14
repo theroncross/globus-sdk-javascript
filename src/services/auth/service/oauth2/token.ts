@@ -1,7 +1,11 @@
-import { ID } from '../../config.js';
+import { ID as service } from '../../config.js';
+import { RESOURCE_SERVERS } from '../../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../../../services/shared.js';
 
 import type { ServiceMethod, ServiceMethodOptions } from '../../../types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 type IntrospectPayload = {
   token: string;
@@ -81,8 +85,8 @@ function injectServiceOptions(
 export const token = function (options = {}, sdkOptions?) {
   return serviceRequest(
     {
-      service: ID,
-      scope: undefined,
+      service,
+      resource_server,
       path: `/v2/oauth2/token`,
       method: HTTP_METHODS.POST,
       preventRetry: true,
@@ -116,8 +120,8 @@ export const introspect = function (options, sdkOptions?) {
   }
   return serviceRequest(
     {
-      service: ID,
-      scope: undefined,
+      service,
+      resource_server,
       path: `/v2/oauth2/token/introspect`,
       method: HTTP_METHODS.POST,
       preventRetry: true,
@@ -139,8 +143,8 @@ export const revoke = function (options, sdkOptions?) {
   }
   return serviceRequest(
     {
-      service: ID,
-      scope: undefined,
+      service,
+      resource_server,
       path: `/v2/oauth2/token/revoke`,
       method: HTTP_METHODS.POST,
       preventRetry: true,
@@ -162,8 +166,8 @@ export const refresh = function (options, sdkOptions?) {
   }
   return serviceRequest(
     {
-      service: ID,
-      scope: undefined,
+      service,
+      resource_server,
       path: `/v2/oauth2/token`,
       method: HTTP_METHODS.POST,
       preventRetry: true,
@@ -185,8 +189,8 @@ export const validate = function (options, sdkOptions?) {
   }
   return serviceRequest(
     {
-      service: ID,
-      scope: undefined,
+      service,
+      resource_server,
       path: `/v2/oauth2/token/validate`,
       method: HTTP_METHODS.POST,
       preventRetry: true,

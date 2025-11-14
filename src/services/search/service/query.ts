@@ -1,9 +1,13 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type { JSONFetchResponse, SDKOptions } from '../../types.js';
 import type { OpenAPI } from '../index.js';
 import type { ResultFormatVersion } from '../types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 type Content = NonNullable<OpenAPI.components['schemas']['ResultEntry']['content']>;
 export type MatchedPrincipalSets =
@@ -72,8 +76,8 @@ export const get = function <C extends Content = Content>(
 ): Promise<JSONFetchResponse<GSearchResult<C>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.SEARCH,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/search`,
     },
     options,
@@ -112,8 +116,8 @@ export const post = function <C extends Content = Content>(
 ): Promise<JSONFetchResponse<GSearchResult<C>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.SEARCH,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/search`,
       method: HTTP_METHODS.POST,
     },

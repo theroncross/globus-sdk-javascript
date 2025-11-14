@@ -1,9 +1,13 @@
-import { ID, SCOPES } from '../../config.js';
+import { ID as service } from '../../config.js';
+import { RESOURCE_SERVERS } from '../../../auth/config.js';
 import { serviceRequest } from '../../../../services/shared.js';
 
 import type { ServiceMethod, ServiceMethodDynamicSegments } from '../../../types.js';
 
 export * as consents from './consents.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * Fetch a single Identity by ID.
@@ -12,8 +16,8 @@ export * as consents from './consents.js';
 export const get = function (identity_id, options = {}, sdkOptions?) {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.VIEW_IDENTITIES,
+      service,
+      resource_server,
       path: `/v2/api/identities/${identity_id}`,
     },
     options,
@@ -28,8 +32,8 @@ export const get = function (identity_id, options = {}, sdkOptions?) {
 export const getAll = function (options = {}, sdkOptions?) {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.VIEW_IDENTITIES,
+      service,
+      resource_server,
       path: `/v2/api/identities`,
     },
     options,

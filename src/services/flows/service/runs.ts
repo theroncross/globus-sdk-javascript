@@ -1,4 +1,5 @@
-import { ID, SCOPES } from '../config.js';
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
 
 import type {
@@ -8,6 +9,9 @@ import type {
 } from '../../../services/types.js';
 
 import type { OpenAPI } from '../index.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://globusonline.github.io/globus-flows/#tag/Runs/paths/~1runs/get
@@ -22,8 +26,8 @@ export const getAll = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs`,
     },
     options,
@@ -49,8 +53,8 @@ export const get = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs/${run_id}`,
     },
     options,
@@ -79,8 +83,8 @@ export const cancel = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs/${run_id}/cancel`,
       method: HTTP_METHODS.POST,
     },
@@ -110,8 +114,8 @@ export const getLog = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs/${run_id}/log`,
     },
     options,
@@ -140,8 +144,8 @@ export const update = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs/${run_id}`,
       method: HTTP_METHODS.PUT,
     },
@@ -172,8 +176,8 @@ export const remove = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs/${run_id}/release`,
       method: HTTP_METHODS.POST,
     },
@@ -204,8 +208,8 @@ export const getDefinition = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.RUN_MANAGE,
+      service,
+      resource_server,
       path: `/runs/${run_id}/definition`,
       method: HTTP_METHODS.GET,
     },

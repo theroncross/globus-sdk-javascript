@@ -1,5 +1,6 @@
+import { ID as service } from '../../config.js';
+import { RESOURCE_SERVERS } from '../../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../../shared.js';
-import { ID, SCOPES } from '../../config.js';
 
 import type {
   ServiceMethod,
@@ -15,6 +16,9 @@ import type {
   TaskEventListDocument,
 } from '../task.js';
 import { PauseRuleDocument } from './pause-rule.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 type LocalUserStatus = 'OK' | 'NO_PERMISSION' | 'NOT_SCANNED' | 'ENDPOINT_ERROR' | 'NO_ENDPOINT';
 
@@ -72,8 +76,8 @@ export const getAll = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/task_list`,
     },
     options,
@@ -106,8 +110,8 @@ export const get = function (
 ): Promise<JSONFetchResponse<EndpointManagerTaskDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/task/${task_id}`,
     },
     options,
@@ -147,8 +151,8 @@ export const cancel = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/admin_cancel`,
       method: HTTP_METHODS.POST,
     },
@@ -174,8 +178,8 @@ export const getAdminCancel = function (
 ): Promise<JSONFetchResponse<AdminCancelDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/admin_cancel/${admin_cancel_id}`,
       method: HTTP_METHODS.POST,
     },
@@ -200,8 +204,8 @@ export const getEventList = function (
 ): Promise<JSONFetchResponse<PaginatedResponse<'Offset', TaskEventListDocument>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/task/${task_id}/event_list`,
     },
     options,
@@ -225,8 +229,8 @@ export const getSuccessfulTransfers = function (
 ): Promise<JSONFetchResponse<PaginatedResponse<'Marker', SuccessfulTransferDocument>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/task/${task_id}/successful_transfers`,
     },
     options,
@@ -250,8 +254,8 @@ export const getSkippedErrors = function (
 ): Promise<JSONFetchResponse<PaginatedResponse<'Marker', SkippedErrorsListDocument>>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/task/${task_id}/skipped_errors`,
     },
     options,
@@ -283,8 +287,8 @@ export const pause = function (
 ): Promise<JSONFetchResponse<AdminPauseDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/admin_pause`,
       method: HTTP_METHODS.POST,
     },
@@ -312,8 +316,8 @@ export const resume = function (
 ): Promise<JSONFetchResponse<AdminResumeDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/admin_resume`,
       method: HTTP_METHODS.POST,
     },
@@ -335,8 +339,8 @@ export const getPauseInfo = function (
 ): Promise<JSONFetchResponse<PauseRuleDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint_manager/task/${task_id}/pause_info`,
     },
     options,

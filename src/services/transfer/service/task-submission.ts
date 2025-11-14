@@ -1,9 +1,13 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
 
 import { getHeadersForService } from '../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type { JSONFetchResponse, SDKOptions, ServiceMethod } from '../../types.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 type TaskLink = {
   DATA_TYPE: 'link';
@@ -183,8 +187,8 @@ export const submitDelete = function (
   };
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/delete`,
       method: HTTP_METHODS.POST,
     },
@@ -214,8 +218,8 @@ export const submitTransfer = function (
   };
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/transfer`,
       method: HTTP_METHODS.POST,
     },
@@ -243,8 +247,8 @@ export const submissionId = function (
 ): Promise<JSONFetchResponse<SubmissionId>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/submission_id`,
     },
     options,

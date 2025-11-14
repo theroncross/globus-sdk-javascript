@@ -1,10 +1,14 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
 import { getHeadersForService } from '../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type { ErrorDocument, QueryParameters } from '../types.js';
 import type { JSONFetchResponse, ServiceMethodDynamicSegments } from '../../types.js';
-import { ConsentRequiredError } from '../../../core/errors.js';
+import type { ConsentRequiredError } from '../../../core/errors.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://docs.globus.org/api/transfer/file_operations/#file_document
@@ -90,8 +94,8 @@ export const ls = function (
 ): Promise<JSONFetchResponse<FileListDocument | DirectoryListingError>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/operation/endpoint/${endpoint_xid}/ls`,
     },
     options,
@@ -123,8 +127,8 @@ export const mkdir = function (endpoint_xid, options, sdkOptions?) {
   };
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/operation/endpoint/${endpoint_xid}/mkdir`,
       method: HTTP_METHODS.POST,
     },
@@ -159,8 +163,8 @@ export const rename = function (endpoint_xid, options, sdkOptions?) {
   };
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/operation/endpoint/${endpoint_xid}/rename`,
       method: HTTP_METHODS.POST,
     },
@@ -196,8 +200,8 @@ export const symlink = function (endpoint_xid, options, sdkOptions?) {
   };
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/operation/endpoint/${endpoint_xid}/symlink`,
       method: HTTP_METHODS.POST,
     },
@@ -226,8 +230,8 @@ export const stat = function (
 ): Promise<JSONFetchResponse<FileDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/operation/endpoint/${endpoint_xid}/stat`,
     },
     options,

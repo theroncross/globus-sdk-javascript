@@ -1,10 +1,13 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-
-import { ID, SCOPES } from '../config.js';
 
 import type { ServiceMethodDynamicSegments, JSONFetchResponse } from '../../../services/types.js';
 
 import type { EndpointRole } from './endpoint';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://docs.globus.org/api/transfer/endpoint_roles/#role_document_fields
@@ -36,8 +39,8 @@ export const getAll = function (
 ): Promise<JSONFetchResponse<RoleListDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_id}/role_list`,
     },
     options,
@@ -62,8 +65,8 @@ export const get = function (
 ): Promise<JSONFetchResponse<RoleDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${endpoint_id}/role/${role_id}`,
     },
     options,
@@ -88,8 +91,8 @@ export const create = function (
 ): Promise<JSONFetchResponse<RoleDocument>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${collection_id}/role`,
       method: HTTP_METHODS.POST,
     },
@@ -122,8 +125,8 @@ export const remove = function (
 > {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v0.10/endpoint/${collection_id}/role/${role_id}`,
       method: HTTP_METHODS.DELETE,
     },

@@ -1,5 +1,6 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { HTTP_METHODS, serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type {
   JSONFetchResponse,
@@ -8,6 +9,9 @@ import type {
 } from '../../types.js';
 
 export * as roles from './roles.js';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const resource_server = RESOURCE_SERVERS[service];
 
 /**
  * @see https://docs.globus.org/api/search/reference/index_list/#indexwithpermissions
@@ -50,8 +54,8 @@ export const get = function (
 ): Promise<JSONFetchResponse<IndexWithPermissions>> {
   return serviceRequest(
     {
-      service: ID,
-      // scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}`,
     },
     options,
@@ -65,8 +69,8 @@ export const get = function (
 export const getAll = function (options?, sdkOptions?): Promise<JSONFetchResponse<IndexList>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index_list`,
     },
     options,
@@ -85,8 +89,8 @@ type IndexCreate = {
 export const create = function (options, sdkOptions?): Promise<JSONFetchResponse<GSearchIndex>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index`,
       method: HTTP_METHODS.POST,
     },
@@ -112,8 +116,8 @@ export const remove = function (
 ): Promise<JSONFetchResponse<IndexDeleteResponse>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}`,
       method: HTTP_METHODS.DELETE,
     },
@@ -143,8 +147,8 @@ export const reopen = function (
 ): Promise<JSONFetchResponse<IndexReopenResponse>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/reopen`,
       method: HTTP_METHODS.POST,
     },
@@ -219,8 +223,8 @@ export const ingest = function (
 ): Promise<JSONFetchResponse<IngestResponse>> {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.ALL,
+      service,
+      resource_server,
       path: `/v1/index/${index_id}/ingest`,
       method: HTTP_METHODS.POST,
     },

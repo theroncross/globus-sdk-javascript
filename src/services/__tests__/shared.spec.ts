@@ -7,6 +7,7 @@ import { getScopes } from '../globus-connect-server';
 import { enable } from '../../core/info/private';
 import pkg from '../../../package.json';
 import { mockLocalStorage, setInitialLocalStorageState } from '../../__mocks__/localStorage';
+import { RESOURCE_SERVERS } from '../auth/config';
 
 describe.only('serviceRequest', () => {
   beforeEach(() => {
@@ -22,7 +23,7 @@ describe.only('serviceRequest', () => {
     const request = await serviceRequest(
       {
         service: 'AUTH',
-        scope: 'a:required:scope',
+        resource_server: RESOURCE_SERVERS.AUTH,
         path: '/some-path',
       },
       {
@@ -80,7 +81,7 @@ describe.only('serviceRequest', () => {
     const request = await serviceRequest(
       {
         service: 'AUTH',
-        scope: 'a:required:scope',
+        resource_server: RESOURCE_SERVERS.AUTH,
         path: '/some-path',
       },
       {
@@ -139,7 +140,7 @@ describe.only('serviceRequest', () => {
 
     const request = await serviceRequest({
       service: 'AUTH',
-      scope: 'a:required:scope',
+      resource_server: RESOURCE_SERVERS.AUTH,
       path: '/some-path',
     });
 
@@ -173,7 +174,7 @@ describe.only('serviceRequest', () => {
     const request = await serviceRequest(
       {
         service: 'AUTH',
-        scope: 'a:required:scope',
+        resource_server: RESOURCE_SERVERS.AUTH,
         path: '/some-path',
       },
       {
@@ -221,7 +222,7 @@ describe.only('serviceRequest', () => {
       'client_id:auth.globus.org': JSON.stringify(TOKEN),
       'client_id:transfer.api.globus.org': JSON.stringify({
         ...TOKEN,
-        resource_server: 'transfer.api.globus.org',
+        resource_server: RESOURCE_SERVERS.TRANSFER,
       }),
     });
 
@@ -240,7 +241,7 @@ describe.only('serviceRequest', () => {
     const request = await serviceRequest(
       {
         service: 'TRANSFER',
-        scope: 'some:required:scope',
+        resource_server: RESOURCE_SERVERS.TRANSFER,
         path: '/some-path',
       },
       {
@@ -262,54 +263,6 @@ describe.only('serviceRequest', () => {
     expect(headers['authorization']).toEqual(`Bearer ${TOKEN.access_token}`);
   });
 
-  it('reads tokens from manager instance when `scope` is configured', async () => {
-    const TOKEN = {
-      access_token: 'access-token',
-      scope: 'profile email openid',
-      expires_in: 172800,
-      token_type: 'Bearer',
-      resource_server: 'auth.globus.org',
-      refresh_token: 'refresh-token',
-      other_tokens: [],
-    };
-
-    setInitialLocalStorageState({
-      'client_id:auth.globus.org': JSON.stringify(TOKEN),
-      'client_id:transfer.api.globus.org': JSON.stringify({
-        ...TOKEN,
-        resource_server: 'transfer.api.globus.org',
-      }),
-    });
-
-    const manager = new AuthorizationManager({
-      client: 'client_id',
-      redirect: 'https://redirect_uri',
-      storage: localStorage,
-    });
-
-    const request = await serviceRequest(
-      {
-        service: 'TRANSFER',
-        scope: 'some:required:scope',
-        path: '/some-path',
-      },
-      {
-        query: {
-          foo: 'bar',
-        },
-      },
-      {
-        manager,
-      },
-    );
-
-    const {
-      req: { headers },
-    } = await mirror(request);
-
-    expect(headers['authorization']).toEqual(`Bearer ${TOKEN.access_token}`);
-  });
-
   it('reads tokens from manager instance when `resource_server` is configured', async () => {
     const TOKEN = {
       access_token: 'access-token',
@@ -325,7 +278,7 @@ describe.only('serviceRequest', () => {
       'client_id:auth.globus.org': JSON.stringify(TOKEN),
       'client_id:transfer.api.globus.org': JSON.stringify({
         ...TOKEN,
-        resource_server: 'transfer.api.globus.org',
+        resource_server: RESOURCE_SERVERS.TRANSFER,
       }),
     });
 
@@ -341,7 +294,7 @@ describe.only('serviceRequest', () => {
     const request = await serviceRequest(
       {
         service: 'TRANSFER',
-        resource_server: 'transfer.api.globus.org',
+        resource_server: RESOURCE_SERVERS.TRANSFER,
         path: '/some-path',
       },
       {
@@ -427,7 +380,7 @@ describe.only('serviceRequest', () => {
     const request = await serviceRequest(
       {
         service: 'AUTH',
-        scope: 'a:required:scope',
+        resource_server: RESOURCE_SERVERS.AUTH,
         path: '/some-path',
       },
       {
@@ -471,7 +424,7 @@ describe.only('serviceRequest', () => {
 
     const TRANSFER_TOKEN = {
       ...TOKEN,
-      resource_server: 'transfer.api.globus.org',
+      resource_server: RESOURCE_SERVERS.TRANSFER,
     };
 
     beforeEach(() => {
@@ -502,7 +455,7 @@ describe.only('serviceRequest', () => {
       const response = await serviceRequest(
         {
           service: 'TRANSFER',
-          scope: 'some:required:scope',
+          resource_server: RESOURCE_SERVERS.TRANSFER,
           path: '/fake-resource',
         },
         {},
@@ -522,7 +475,7 @@ describe.only('serviceRequest', () => {
       const response = await serviceRequest(
         {
           service: 'TRANSFER',
-          scope: 'some:required:scope',
+          resource_server: RESOURCE_SERVERS.TRANSFER,
           path: '/fake-resource',
           preventRetry: true,
         },
@@ -538,7 +491,7 @@ describe.only('serviceRequest', () => {
       const response = await serviceRequest(
         {
           service: 'TRANSFER',
-          scope: 'some:required:scope',
+          resource_server: RESOURCE_SERVERS.TRANSFER,
           path: '/fake-resource',
         },
         {},
@@ -558,7 +511,7 @@ describe.only('serviceRequest', () => {
       const response = await serviceRequest(
         {
           service: 'TRANSFER',
-          scope: 'some:required:scope',
+          resource_server: RESOURCE_SERVERS.TRANSFER,
           path: '/fake-resource',
         },
         {},
@@ -604,7 +557,7 @@ describe.only('serviceRequest', () => {
       const response = await serviceRequest(
         {
           service: 'TRANSFER',
-          scope: 'some:required:scope',
+          resource_server: RESOURCE_SERVERS.TRANSFER,
           path: '/fake-resource',
         },
         {},
@@ -659,7 +612,7 @@ describe.only('serviceRequest', () => {
       const response = await serviceRequest(
         {
           service: 'TRANSFER',
-          scope: 'some:required:scope',
+          resource_server: RESOURCE_SERVERS.TRANSFER,
           path: '/fake-resource',
         },
         {},

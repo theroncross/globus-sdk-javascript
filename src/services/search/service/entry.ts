@@ -1,5 +1,6 @@
+import { ID as service } from '../config.js';
+import { RESOURCE_SERVERS } from '../../auth/config.js';
 import { serviceRequest } from '../../shared.js';
-import { ID, SCOPES } from '../config.js';
 
 import type { ResultFormatVersion } from '../types.js';
 import type { ServiceMethodDynamicSegments } from '../../types.js';
@@ -13,8 +14,8 @@ import type { ServiceMethodDynamicSegments } from '../../types.js';
 export const get = function (index_id, options?, sdkOptions?) {
   return serviceRequest(
     {
-      service: ID,
-      scope: SCOPES.SEARCH,
+      service,
+      resource_server: RESOURCE_SERVERS[service],
       path: `/v1/index/${index_id}/entry`,
     },
     options,
